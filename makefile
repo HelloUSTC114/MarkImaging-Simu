@@ -32,7 +32,7 @@ CXXFLAGS = -g -Wall -I${DIR_INC} -I. `root-config --cflags`
 CXXLIBS = `root-config --libs` -lSpectrum -L$(USERROOT)/lib 
 
 
-LIB = ImagingAlgorithm
+LIB = MDImaging
 LIBFULL = $(patsubst %,${DIR_LIB}/lib%.so,$(LIB))
 
 DIR_LINK = ./lkdef
@@ -68,13 +68,14 @@ ${DIR_OBJ}/%.o: ${DIR_SRC}/%.cpp ${DIR_INC}/%.h
 
 
 # $(DICTCXX): $(HEADER)   $(LINKDEF)
+# @cp $(DIR_LINK)/*pcm $(PWD)
 $(DICTCXX): $(HEADER)   
 	@echo "####################################################"
 	@echo rootcling generating $@
 	@echo ----------------------------------------------------
 	-@mkdir $(DIR_LINK)
 	@rootcling	-f	$@	-c	$(HEADER)
-	@cp $(DIR_LINK)/*pcm $(PWD)
+	@cp $(DIR_LINK)/*pcm $(DIR_LIB)
 	@echo "####################################################"
 	@echo 
 
@@ -82,9 +83,9 @@ $(DICTCXX): $(HEADER)
 
 
 clean:
-	-@rm obj/*.o lib/*.so lkdef/* bin/* 2> /dev/null
+	-@rm obj/*.o lib/*.so lib/*.pcm lkdef/* bin/* 2> /dev/null
 distclean:
-	-@rm obj/*.o lib/*.so lkdef/* bin/* 2> /dev/null
+	-@rm obj/*.o lib/*.so lib/*.pcm lkdef/* bin/* 2> /dev/null
 	-@rm *.root *.pdf $(Excutable) *Dict* filelist 2> /dev/null
 
 

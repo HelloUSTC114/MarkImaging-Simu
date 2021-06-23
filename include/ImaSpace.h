@@ -27,6 +27,7 @@ public:
 
     VoxelID JudgeID(double pos[3]);      // Judge voxel id from 3D position
     void DrawObject(const ObjectPosition &obj); // Draw Object inside Imaging Space
+    void DrawObject(ObjectPosition *obj){DrawObject(*obj);}; // Draw Object inside Imaging Space
     TH3D *GetHist() const { return fImaSpace; }
 
     ~ImaSpace();
@@ -48,11 +49,15 @@ class ObjectPosition
 
 public:
     bool AddObject(VoxelID id, double lambda); // Can only add material one voxel by one
-
     bool JudgeValid(VoxelID id);
+
+    static ObjectPosition*& CurrentObjectPosition();
 
 private:
     std::map<VoxelID, double> objMap; // Map voxel id to lambda in particle emission poisson distribution
 };
+
+#define gObjPos (ObjectPosition::CurrentObjectPosition())
+
 
 #endif

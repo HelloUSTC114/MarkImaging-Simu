@@ -110,3 +110,9 @@ bool ObjectPosition::JudgeValid(VoxelID id)
     else
         return true;
 }
+
+ObjectPosition *&ObjectPosition::CurrentObjectPosition()
+{
+    static ObjectPosition *currentObjectPosition = new ObjectPosition();
+    return currentObjectPosition;
+}
