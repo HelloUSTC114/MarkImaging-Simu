@@ -86,18 +86,18 @@ void ImaSpace::DrawObject(const ObjectPosition &obj)
 {
     for (auto it = obj.objMap.begin(); it != obj.objMap.end(); it++)
     {
-        fImaSpace->SetBinContent(it->first.fID3D[0], it->first.fID3D[1], it->first.fID3D[2], it->second);
+        fImaSpace->SetBinContent(it->first.fID3D[0], it->first.fID3D[1], it->first.fID3D[2], it->second.fpAbsorbed);
     }
 }
 
 // ObjectPosition: Define where objects are placed
-bool ObjectPosition::AddObject(VoxelID id, double lambda)
+bool ObjectPosition::AddObject(VoxelID id, const ObjectProperty &objPro)
 {
     auto flag = JudgeValid(id);
     if (!flag)
         return false;
 
-    objMap.insert(std::pair<VoxelID, double>(id, lambda));
+    objMap.insert(std::pair<VoxelID, ObjectProperty>(id, objPro));
     return true;
 }
 

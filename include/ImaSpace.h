@@ -15,6 +15,12 @@ struct VoxelID
 };
 bool operator<(VoxelID id1, VoxelID id2); // Compare two vodel ids. Larger if z value is bigger.
 
+struct ObjectProperty
+{
+    double fpAbsorbed;   // Absorption probability
+    double fpEmision[4]; // Give Emission probability
+};
+
 class ImaSpace
 {
 public:
@@ -49,13 +55,13 @@ class ObjectPosition
     friend class ImaSpace;
 
 public:
-    bool AddObject(VoxelID id, double lambda); // Can only add material one voxel by one
+    bool AddObject(VoxelID id, const ObjectProperty & objPro); // Can only add material one voxel by one
     bool JudgeValid(VoxelID id);
 
     static ObjectPosition *&CurrentObjectPosition();
 
 private:
-    std::map<VoxelID, double> objMap; // Map voxel id to lambda in particle emission poisson distribution
+    std::map<VoxelID, ObjectProperty> objMap; // Map voxel id to lambda in particle emission poisson distribution
 };
 
 #define gObjPos (ObjectPosition::CurrentObjectPosition())
